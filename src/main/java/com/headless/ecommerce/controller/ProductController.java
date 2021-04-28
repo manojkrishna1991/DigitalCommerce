@@ -20,4 +20,13 @@ public class ProductController {
     public Product getProduct(@PathVariable String id) {
         return productService.getProduct(id);
     }
+
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<Product> deleteProduct(@PathVariable String id) {
+        return ResponseEntity.ok(productService.deleteProduct(id));
+    }
+    @DeleteMapping("/product")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
+        return ResponseEntity.ok(productService.updateProduct(product));
+    }
 }
