@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 @RestController
 public class ProductController {
     @Autowired
@@ -21,11 +23,18 @@ public class ProductController {
         return productService.getProduct(id);
     }
 
+    @GetMapping("/products")
+    public Collection<Product> getAllProduct() {
+        return productService.getAllProduct();
+    }
+
+
     @DeleteMapping("/product/{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable String id) {
         return ResponseEntity.ok(productService.deleteProduct(id));
     }
-    @DeleteMapping("/product")
+
+    @PutMapping("/product")
     public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
         return ResponseEntity.ok(productService.updateProduct(product));
     }
