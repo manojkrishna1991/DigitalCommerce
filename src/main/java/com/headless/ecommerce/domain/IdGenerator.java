@@ -8,6 +8,12 @@ public class IdGenerator {
     private Long batchSize;
     private String name;
 
+    public IdGenerator(String name, Long batchSize, Long seed) {
+        this.seed = seed;
+        this.batchSize = batchSize;
+        this.name = name;
+    }
+
     public Long getSeed() {
         return seed;
     }
