@@ -10,7 +10,7 @@ public class Catalog {
     @Id
     private String id;
     private String name;
-    Collection<Category> categories;
+    Collection<String> categories;
 
     public String getId() {
         return id;
@@ -28,11 +28,11 @@ public class Catalog {
         this.name = name;
     }
 
-    public Collection<Category> getCategories() {
+    public Collection<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(Collection<Category> categories) {
+    public void setCategories(Collection<String> categories) {
         this.categories = categories;
     }
 }
