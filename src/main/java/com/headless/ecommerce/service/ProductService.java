@@ -30,6 +30,7 @@ public class ProductService {
     public Product getProduct(@NonNull String id) {
         return mongoTemplate.findById(id, Product.class);
     }
+
     public Collection<Product> getAllProduct() {
         return mongoTemplate.findAll(Product.class);
     }

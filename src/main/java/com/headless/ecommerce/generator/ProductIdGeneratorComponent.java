@@ -28,7 +28,8 @@ public class ProductIdGeneratorComponent implements IdGeneratorComponent, Initia
     private MongoTemplate mongoTemplate;
 
 
-    @Override public Long generateId() {
+    @Override
+    public Long generateId() {
         Long currentId = getCurrentId();
         currentId++;
         setCurrentId(currentId);
@@ -42,12 +43,14 @@ public class ProductIdGeneratorComponent implements IdGeneratorComponent, Initia
         return query;
     }
 
-    @Override public String generateIdInString() {
+    @Override
+    public String generateIdInString() {
         return getCurrentId().toString();
     }
 
 
-    @Override public void afterPropertiesSet() {
+    @Override
+    public void afterPropertiesSet() {
         IdGenerator idGenerator = mongoTemplate.findOne(findQuery(), IdGenerator.class);
         if (idGenerator == null) {
             setCurrentId(seedId);

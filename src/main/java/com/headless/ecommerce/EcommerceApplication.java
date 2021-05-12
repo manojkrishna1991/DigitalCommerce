@@ -49,28 +49,24 @@ public class EcommerceApplication {
                                 .code("500")
                                 .description("500 message")
                                 .representation(MediaType.TEXT_XML)
-                                .apply(r ->
-                                        r.model(m ->
-                                                m.referenceModel(ref ->
-                                                        ref.key(k ->
-                                                                k.qualifiedModelName(q ->
-                                                                        q.namespace("some:namespace")
-                                                                                .name("ERROR"))))))
+                                .apply(r -> r.model(m -> m.referenceModel(ref -> ref.key(k -> k.qualifiedModelName(q -> q.namespace("some:namespace")
+                                        .name("ERROR"))))))
                                 .build()))
                 .enableUrlTemplating(true)
-				.apiInfo(apiInfo());
+                .apiInfo(apiInfo());
 
 
 
     }
-	private ApiInfo apiInfo() {
-		return new ApiInfo(
-				"HeadLess API Commerce",
-				"Ecommerce API",
-				"1",
-				"Terms of service",
-				new Contact("Manoj Krishna", "dmanojkrishna@gmail.com", "dmanojkrishna@gmail.com"),
-				"License of API", "API license URL", Collections.emptyList());
-	}
+
+    private ApiInfo apiInfo() {
+        return new ApiInfo(
+                "HeadLess API Commerce",
+                "Ecommerce API",
+                "1",
+                "Terms of service",
+                new Contact("Manoj Krishna", "dmanojkrishna@gmail.com", "dmanojkrishna@gmail.com"),
+                "License of API", "API license URL", Collections.emptyList());
+    }
 
 }

@@ -14,6 +14,7 @@ public class CatalogService {
     private MongoTemplate mongoTemplate;
 
     public Catalog createCatalog(Catalog catalog) {
+
         return mongoTemplate.save(catalog);
     }
 
