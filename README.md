@@ -7,4 +7,4 @@ Spring Based Open Source Project which provides search,cart,payment and Fullfilm
 http://localhost:8080/swagger-ui/index.html
 =======
 
-[![Java CI with Gradle](https://github.com/headlessecommerce/headlessecommerce.github.io/actions/workflows/gradle.yml/badge.svg?branch=main&event=push)](https://github.com/headlessecommerce/headlessecommerce.github.io/actions/workflows/gradle.yml)
+[![Java CI with Gradle](https://github.com/headlessecommerce/headlessecommerce.github.io/actions/workflows/gradle_build.yml/badge.svg)](https://github.com/headlessecommerce/headlessecommerce.github.io/actions/workflows/gradle_build.yml)
