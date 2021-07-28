@@ -2,47 +2,42 @@ package com.headless.ecommerce.service;
 
 import com.headless.ecommerce.domain.Product;
 import com.headless.ecommerce.exception.ProductNotFoundException;
-import com.headless.ecommerce.generator.ProductIdGeneratorComponent;
 import com.headless.ecommerce.repository.ProductRepository;
-import com.mongodb.client.result.DeleteResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class ProductService {
     @Autowired
-    private MongoTemplate mongoTemplate;
-    @Autowired
     private ProductRepository productRepository;
-    @Autowired
-    private ProductIdGeneratorComponent productIdGeneratorComponent;
 
     public Product saveProduct(String name) {
-        Product newProduct = new Product(name, productIdGeneratorComponent.generateIdInString());
-        return mongoTemplate.save(newProduct);
+        Product newProduct = new Product();
+        newProduct.setName(name);
+        return productRepository.save(newProduct);
     }
 
-    public Product getProduct(@NonNull String id) {
-        return mongoTemplate.findById(id, Product.class);
+    public Product getProduct(@NonNull Long id) {
+        return productRepository.findById(id).get();
     }
 
-    public Collection<Product> getAllProduct() {
-        return mongoTemplate.findAll(Product.class);
+    public List<Product> getAllProduct() {
+        return StreamSupport.stream(productRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
-    public Product deleteProduct(@NonNull String id) {
+    public Product deleteProduct(@NonNull Long id) {
         Product product = getProduct(id);
-        DeleteResult deleteResult = mongoTemplate.remove(product);
-        if (deleteResult.wasAcknowledged()) {
-            return product;
+        if (product != null) {
+            productRepository.delete(product);
         } else {
             throw new ProductNotFoundException();
         }
+        return product;
     }
 
     public Product updateProduct(Product produt) {

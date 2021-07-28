@@ -1,21 +1,20 @@
 package com.headless.ecommerce.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.stereotype.Service;
-
 import com.headless.ecommerce.domain.Category;
+import com.headless.ecommerce.repository.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CategoryService {
     @Autowired
-    private MongoTemplate mongoTemplate;
+    private CategoryRepository categoryRepository;
 
-    public Category getCategory(String id) {
-        return mongoTemplate.findById(id, Category.class);
+    public Category getCategory(Long id) {
+        return categoryRepository.findById(id).get();
     }
 
     public Category saveCategory(Category category) {
-        return mongoTemplate.save(category);
+        return categoryRepository.save(category);
     }
 }
