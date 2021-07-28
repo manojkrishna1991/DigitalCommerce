@@ -12,7 +12,7 @@ sourceCompatibility = '8'
 repositories {
 	mavenCentral()
 	maven {
-		name = "GitHubPackages"
+		name = "headlessecommerce"
 		url = "https://maven.pkg.github.com/headlessecommerce/headlessecommerce.github.io"
 		credentials {
 			username = System.getenv("GITHUB_ACTOR")
