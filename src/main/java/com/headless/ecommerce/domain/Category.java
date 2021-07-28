@@ -12,7 +12,7 @@ public class Category {
     private Long id;
     private String name;
     @ManyToOne
-    @JoinColumn(name="catalog_id", nullable=false)
+    @JoinColumn(name="catalog_id")
     private Catalog catalog;
     @OneToMany(mappedBy = "category")
     private List<Product> products;

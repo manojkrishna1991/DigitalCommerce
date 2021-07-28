@@ -16,7 +16,7 @@ public class CatalogController {
     }
 
     @GetMapping("/catalog/{id}")
-    public Catalog getCatalog(@PathVariable String id) {
+    public Catalog getCatalog(@PathVariable Long id) {
         return catalogService.getCatalog(id);
     }
 }

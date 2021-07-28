@@ -16,7 +16,7 @@ public class Sku {
     private Double listPrice;
     private Double salePrice;
     @ManyToOne
-    @JoinColumn(name="product_id", nullable=false)
+    @JoinColumn(name="product_id")
     private Product product;
 
     public Long getId() {

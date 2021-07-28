@@ -17,7 +17,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Sku> skus;
     @ManyToOne
-    @JoinColumn(name="category_id", nullable=false)
+    @JoinColumn(name="category_id")
     private Category category;
 
     public String getName() {
