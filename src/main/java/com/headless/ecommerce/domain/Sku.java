@@ -3,6 +3,7 @@ package com.headless.ecommerce.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "sku")
 public class Sku {
@@ -18,6 +19,8 @@ public class Sku {
     @ManyToOne
     @JoinColumn(name="product_id")
     private Product product;
+    @OneToMany(mappedBy = "sku")
+    private List<SkuAttributes> skuAttributes;
 
     public Long getId() {
         return id;

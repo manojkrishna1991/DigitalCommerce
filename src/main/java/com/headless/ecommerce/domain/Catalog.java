@@ -13,6 +13,8 @@ public class Catalog {
     private String name;
     @OneToMany(mappedBy="catalog")
     private List<Category> categories;
+    @OneToMany(mappedBy="catalog")
+    private List<CatalogAttributes> catalogAttributes;
 
     public Long getId() {
         return id;

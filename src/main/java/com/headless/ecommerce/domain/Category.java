@@ -18,6 +18,8 @@ public class Category {
     private List<Product> products;
     @OneToMany
     private List<Category> childCategories;
+    @OneToMany(mappedBy = "category")
+    private List<CategoryAttributes> categoryAttributes;
 
     public Long getId() {
         return id;
