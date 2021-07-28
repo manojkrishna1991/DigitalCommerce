@@ -1,22 +1,24 @@
 package com.headless.ecommerce.domain;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Collection;
+import javax.persistence.*;
+import java.util.List;
 
-@Document(value = "catalog")
+@Entity(name = "catalog")
 public class Catalog {
     @Id
-    private String id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "catalog_id")
+    private Long id;
     private String name;
-    Collection<String> categories;
+    @OneToMany(mappedBy="catalog")
+    private List<Category> categories;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -28,11 +30,11 @@ public class Catalog {
         this.name = name;
     }
 
-    public Collection<String> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Collection<String> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 }

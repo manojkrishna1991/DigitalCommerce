@@ -1,24 +1,29 @@
 package com.headless.ecommerce.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(value = "sku")
+import javax.persistence.*;
+
+@Entity(name = "sku")
 public class Sku {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty
-    private String id;
+    @Column(name = "sku_id")
+    private Long id;
     private String name;
     private Long quantity;
     private Double listPrice;
     private Double salePrice;
+    @ManyToOne
+    @JoinColumn(name="product_id", nullable=false)
+    private Product product;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

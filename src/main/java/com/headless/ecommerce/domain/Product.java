@@ -1,24 +1,24 @@
 package com.headless.ecommerce.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
-@Document(value = "product")
+@Entity(name = "product")
 public class Product {
     private String name;
     @Id
-    @JsonProperty
-    private String id;
-    private Collection<Product> relatedProducts;
-    private Collection<Sku> skus;
-
-    public Product(String name, String id) {
-        this.name = name;
-        this.id = id;
-    }
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "product_id")
+    private Long id;
+    @OneToMany
+    private List<Product> relatedProducts;
+    @OneToMany(mappedBy = "product")
+    private List<Sku> skus;
+    @ManyToOne
+    @JoinColumn(name="category_id", nullable=false)
+    private Category category;
 
     public String getName() {
         return name;
@@ -28,27 +28,28 @@ public class Product {
         this.name = name;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setRelatedProducts(List<Product> relatedProducts) {
+        this.relatedProducts = relatedProducts;
+    }
+
+    public void setSkus(List<Sku> skus) {
+        this.skus = skus;
     }
 
     public Collection<Product> getRelatedProducts() {
         return relatedProducts;
     }
 
-    public void setRelatedProducts(Collection<Product> relatedProducts) {
-        this.relatedProducts = relatedProducts;
-    }
-
     public Collection<Sku> getSkus() {
         return skus;
     }
 
-    public void setSkus(Collection<Sku> skus) {
-        this.skus = skus;
-    }
 }
