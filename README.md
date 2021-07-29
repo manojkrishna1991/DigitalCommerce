@@ -10,12 +10,21 @@ http://localhost:8080/swagger-ui/index.html
 [![Build Passed](https://github.com/headlessecommerce/headlessecommerce.github.io/actions/workflows/gradle_build.yml/badge.svg?branch=main)](https://github.com/headlessecommerce/headlessecommerce.github.io/actions/workflows/gradle_build.yml)
 
 
-To install this package as maven dependency use
+#### For new projects
+For Maven
+### Getting Started
 
+#### For new projects
+For Maven
+```xml 
 <dependency>
   <groupId>com.headless</groupId>
   <artifactId>headless-ecommerce</artifactId>
   <version>0.2</version>
 </dependency>
 
-mvn install
+```
+
+For Gradle
+```gradle 
+  implementation "com.headless:headless-ecommerce:0.2"
