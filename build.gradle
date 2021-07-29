@@ -9,13 +9,13 @@ sourceCompatibility = '8'
 repositories {
     mavenCentral()
 }
-jar {
-    enabled = true
+configurations {
+    [apiElements, runtimeElements].each {
+        it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
+        it.outgoing.artifact(bootJar)
+    }
 }
 
-bootJar {
-    classifier = 'application'
-}
 publishing {
     repositories {
         maven {
@@ -33,6 +33,14 @@ publishing {
             artifactId = 'headless-ecommerce'
             version = '0.3'
             from(components.java)
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
         }
     }
 }
