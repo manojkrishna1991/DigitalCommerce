@@ -25,8 +25,8 @@ publishing {
             name = "GitHubPackages"
             url = "https://maven.pkg.github.com/headlessecommerce/headlessecommerce.github.io"
             credentials {
-                username = 'manojkrishna1991'
-                password = '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'
+                username = System.getenv("USERNAME_HEADLESS")
+                password = System.getenv("TOKEN_HEADLESS")
             }
         }
     }
