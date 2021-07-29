@@ -27,3 +27,4 @@ jobs:
         env:
           TOKEN_HEADLESS: ${{ secrets.TOKEN_HEADLESS }}
           USERNAME_HEADLESS: ${{ secrets.USERNAME_HEADLESS }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
