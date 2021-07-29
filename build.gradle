@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.headless'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 sourceCompatibility = '8'
 
 repositories {
@@ -25,8 +25,8 @@ publishing {
             name = "GitHubPackages"
             url = "https://maven.pkg.github.com/headlessecommerce/headlessecommerce.github.io"
             credentials {
-                username = System.getenv("USERNAME_HEADLESS")
-                password = System.getenv("TOKEN_HEADLESS")
+                username = 'manojkrishna1991'
+                password = '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'
             }
         }
     }
@@ -34,7 +34,7 @@ publishing {
         gpr(MavenPublication) {
             groupId = 'com.headless'
             artifactId = 'headless-ecommerce'
-            version = '0.1'
+            version = '0.2'
             from(components.java)
             versionMapping {
                 usage('java-api') {
