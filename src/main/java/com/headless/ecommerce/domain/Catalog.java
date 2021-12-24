@@ -39,4 +39,12 @@ public class Catalog {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
+
+    public List<CatalogAttributes> getCatalogAttributes() {
+        return catalogAttributes;
+    }
+
+    public void setCatalogAttributes(List<CatalogAttributes> catalogAttributes) {
+        this.catalogAttributes = catalogAttributes;
+    }
 }

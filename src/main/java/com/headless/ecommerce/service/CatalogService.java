@@ -6,17 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CatalogService {
     @Autowired
     private CatalogRepository catalogRepository;
 
-    public Catalog createCatalog(Catalog catalog) {
+    public Catalog saveCatalog(Catalog catalog) {
 
         return catalogRepository.save(catalog);
     }
 
     public Catalog getCatalog(@NonNull Long id) {
-        return catalogRepository.findById(id).get();
+        final Optional<Catalog> catalog = catalogRepository.findById(id);
+        if (!catalog.isPresent()) {
+            return new Catalog();
+        }
+        return catalog.get();
     }
 }
