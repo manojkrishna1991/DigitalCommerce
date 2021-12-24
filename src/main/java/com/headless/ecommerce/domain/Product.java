@@ -13,14 +13,14 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
     @OneToMany
-    private List<Product> relatedProducts;
+    private Collection<Product> relatedProducts;
     @OneToMany(mappedBy = "product")
-    private List<Sku> skus;
+    private Collection<Sku> skus;
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
     @OneToMany(mappedBy = "product")
-    private List<ProductAttributes> productAttributes;
+    private Collection<ProductAttributes> productAttributes;
 
     public String getName() {
         return name;
@@ -38,20 +38,36 @@ public class Product {
         this.id = id;
     }
 
-    public void setRelatedProducts(List<Product> relatedProducts) {
-        this.relatedProducts = relatedProducts;
-    }
-
-    public void setSkus(List<Sku> skus) {
-        this.skus = skus;
-    }
 
     public Collection<Product> getRelatedProducts() {
         return relatedProducts;
+    }
+
+    public void setRelatedProducts(Collection<Product> relatedProducts) {
+        this.relatedProducts = relatedProducts;
     }
 
     public Collection<Sku> getSkus() {
         return skus;
     }
 
+    public void setSkus(Collection<Sku> skus) {
+        this.skus = skus;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Collection<ProductAttributes> getProductAttributes() {
+        return productAttributes;
+    }
+
+    public void setProductAttributes(Collection<ProductAttributes> productAttributes) {
+        this.productAttributes = productAttributes;
+    }
 }

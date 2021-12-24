@@ -1,6 +1,7 @@
 package com.headless.ecommerce.controller;
 
 import com.headless.ecommerce.domain.Product;
+import com.headless.ecommerce.dto.ProductDto;
 import com.headless.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,17 +15,17 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/product")
-    public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(productService.saveProduct(product.getName()));
+    public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto productDto) {
+        return ResponseEntity.ok(productService.saveProduct(productDto));
     }
 
     @GetMapping("/product/{id}")
-    public Product getProduct(@PathVariable Long id) {
-        return productService.getProduct(id);
+    public ProductDto getProduct(@PathVariable Long id) {
+        return productService.getProductById(id);
     }
 
     @GetMapping("/products")
-    public Collection<Product> getAllProduct() {
+    public Collection<ProductDto> getAllProduct() {
         return productService.getAllProduct();
     }
 
@@ -35,7 +36,8 @@ public class ProductController {
     }
 
     @PutMapping("/product")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(productService.updateProduct(product));
+    public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto) {
+
+        return ResponseEntity.ok(productService.updateProduct(productDto));
     }
 }
