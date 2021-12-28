@@ -1,46 +1,60 @@
 package com.headless.ecommerce.controller;
 
-import com.headless.ecommerce.domain.Product;
+import com.headless.ecommerce.domain.*;
 import com.headless.ecommerce.dto.CategoryDto;
+import com.headless.ecommerce.service.CatalogService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.headless.ecommerce.domain.Category;
 import com.headless.ecommerce.service.CategoryService;
 
+@RestController
+public class CategoryController {
+    private final CategoryService categoryService;
 
-import java.util.List;
-
-@RestController public class CategoryController {
-    private CategoryService categoryService;
+    private CatalogService catalogService;
 
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/category/{id}") public ResponseEntity<Category> getCategory(@PathVariable Long id) {
+    @GetMapping("/category/{id}")
+    public ResponseEntity<Category> getCategory(@PathVariable Long id) {
         return ResponseEntity.ok(categoryService.getCategory(id));
     }
 
-    @PostMapping("/category") public Category saveCategory(@RequestBody CategoryDto categoryDto) {
+    @PostMapping("/category")
+    public Category saveCategory(@RequestBody CategoryDto categoryDto) {
+        Category category = categoryService.saveCategory(createCategoryFromDto(categoryDto));
+        saveCategoryAttributes(categoryDto, category);
+        return category;
+    }
+
+    private Category createCategoryFromDto(CategoryDto categoryDto) {
         Category category = new Category();
         category.setId(categoryDto.getId());
         category.setName(categoryDto.getName());
-        category.setProducts((List<Product>) categoryDto.getProducts());
-        category.setChildCategories((List<Category>) categoryDto.getChildCategories());
-        return categoryService.saveCategory(category);
+        Catalog catalog = catalogService.findCatalog(categoryDto.getCatalogId());
+        category.setCatalog(catalog);
+        return category;
     }
 
-    @PutMapping("/category") public Category updateCategory(@RequestBody CategoryDto categoryDto) {
+    private void saveCategoryAttributes(CategoryDto categoryDto, Category savedCategory) {
+        categoryDto.getCategoryAttributes().forEach(attributes -> {
+            CategoryAttributes categoryAttributes = new CategoryAttributes();
+            categoryAttributes.setId(attributes.getId());
+            categoryAttributes.setKey(attributes.getKey());
+            categoryAttributes.setValue(attributes.getValue());
+            categoryAttributes.setCategory(savedCategory);
+            categoryService.saveCategoryAttributes(categoryAttributes);
+        });
+    }
+
+    @PutMapping("/category")
+    public Category updateCategory(@RequestBody CategoryDto categoryDto) {
         Category category = new Category();
         if (category.getName() != null) {
             category.setName(categoryDto.getName());
-        }
-        if (!category.getProducts().isEmpty()) {
-            category.setProducts((List<Product>) categoryDto.getProducts());
-        }
-        if (!category.getProducts().isEmpty()) {
-            category.setChildCategories((List<Category>) categoryDto.getChildCategories());
         }
         return categoryService.saveCategory(category);
     }

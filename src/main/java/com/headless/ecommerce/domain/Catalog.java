@@ -2,6 +2,7 @@ package com.headless.ecommerce.domain;
 
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @Entity(name = "catalog")
@@ -14,7 +15,7 @@ public class Catalog {
     @OneToMany(mappedBy="catalog")
     private List<Category> categories;
     @OneToMany(mappedBy="catalog")
-    private List<CatalogAttributes> catalogAttributes;
+    private Collection<CatalogAttributes> catalogAttributes;
 
     public Long getId() {
         return id;
@@ -40,7 +41,7 @@ public class Catalog {
         this.categories = categories;
     }
 
-    public List<CatalogAttributes> getCatalogAttributes() {
+    public Collection<CatalogAttributes> getCatalogAttributes() {
         return catalogAttributes;
     }
 

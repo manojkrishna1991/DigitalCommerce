@@ -3,11 +3,10 @@ package com.headless.ecommerce.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Collection;
-
 @Getter
 @Setter
-public class CatalogDto {
+public class Attributes {
     private Long id;
-    private String name;
+    private String key;
+    private String value;
 }

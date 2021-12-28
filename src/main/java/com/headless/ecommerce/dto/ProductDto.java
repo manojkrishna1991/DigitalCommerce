@@ -17,7 +17,7 @@ public class ProductDto {
     private Long id;
     private Collection<Product> relatedProducts;
     private Collection<Sku> skus;
-    private Category category;
-    private Collection<ProductAttributes> productAttributes;
+    private CategoryDto category;
+    private Collection<Attributes> productAttributes;
 
 }

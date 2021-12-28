@@ -45,6 +45,21 @@ public class Category {
         return childCategories;
     }
 
+    public Catalog getCatalog() {
+        return catalog;
+    }
+
+    public void setCatalog(Catalog catalog) {
+        this.catalog = catalog;
+    }
+
+    public List<CategoryAttributes> getCategoryAttributes() {
+        return categoryAttributes;
+    }
+
+    public void setCategoryAttributes(List<CategoryAttributes> categoryAttributes) {
+        this.categoryAttributes = categoryAttributes;
+    }
 
     public void setProducts(List<Product> products) {
         this.products = products;

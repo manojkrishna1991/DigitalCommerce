@@ -14,8 +14,6 @@ public class CategoryDto {
 
     private Long id;
     private String name;
-    private Catalog catalog;
-    private Collection<Product> products;
-    private Collection<Category> childCategories;
-    private Collection<CategoryAttributes> categoryAttributes;
+    private Long catalogId;
+    private Collection<Attributes> categoryAttributes;
 }
