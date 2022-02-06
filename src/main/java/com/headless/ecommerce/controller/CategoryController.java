@@ -3,6 +3,7 @@ package com.headless.ecommerce.controller;
 import com.headless.ecommerce.domain.*;
 import com.headless.ecommerce.dto.CategoryDto;
 import com.headless.ecommerce.service.CatalogService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,13 +11,10 @@ import com.headless.ecommerce.service.CategoryService;
 
 @RestController
 public class CategoryController {
-    private final CategoryService categoryService;
-
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
     private CatalogService catalogService;
-
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
 
     @GetMapping("/category/{id}")
     public ResponseEntity<Category> getCategory(@PathVariable Long id) {
