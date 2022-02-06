@@ -2,6 +2,7 @@ package com.headless.ecommerce.controller;
 
 import com.headless.ecommerce.domain.*;
 import com.headless.ecommerce.dto.CategoryDto;
+import com.headless.ecommerce.mapper.CategoryMapper;
 import com.headless.ecommerce.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,8 @@ public class CategoryController {
     private CategoryService categoryService;
     @Autowired
     private CatalogService catalogService;
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     @GetMapping("/category/{id}")
     public ResponseEntity<Category> getCategory(@PathVariable Long id) {
@@ -22,10 +25,9 @@ public class CategoryController {
     }
 
     @PostMapping("/category")
-    public Category saveCategory(@RequestBody CategoryDto categoryDto) {
+    public CategoryDto saveCategory(@RequestBody CategoryDto categoryDto) {
         Category category = categoryService.saveCategory(createCategoryFromDto(categoryDto));
-        saveCategoryAttributes(categoryDto, category);
-        return category;
+        return categoryMapper.categoryToCategoryDto(category);
     }
 
     private Category createCategoryFromDto(CategoryDto categoryDto) {
@@ -36,17 +38,15 @@ public class CategoryController {
         category.setCatalog(catalog);
         return category;
     }
-
-    private void saveCategoryAttributes(CategoryDto categoryDto, Category savedCategory) {
-        categoryDto.getCategoryAttributes().forEach(attributes -> {
+    //TODO: add the catalog attribute method
+/*    private void saveCategoryAttributes(CategoryDto categoryDto, Category savedCategory) {
             CategoryAttributes categoryAttributes = new CategoryAttributes();
             categoryAttributes.setId(attributes.getId());
             categoryAttributes.setKey(attributes.getKey());
             categoryAttributes.setValue(attributes.getValue());
             categoryAttributes.setCategory(savedCategory);
             categoryService.saveCategoryAttributes(categoryAttributes);
-        });
-    }
+    }*/
 
     @PutMapping("/category")
     public Category updateCategory(@RequestBody CategoryDto categoryDto) {
