@@ -6,6 +6,7 @@ import com.headless.ecommerce.dto.CatalogDto;
 import com.headless.ecommerce.mapper.CatalogMapper;
 import com.headless.ecommerce.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,19 @@ public class CatalogController {
         Catalog catalog = catalogService.saveCatalog(catalogMapper.catalogDtoToCatalog(catalogDto));
         return catalogMapper.catalogToCatalogDto(catalog);
     }
+
+    @DeleteMapping("/catalog/{catalogId}")
+    public ResponseEntity<Object> deleteCatalog(@RequestBody Long catalogId) {
+        catalogService.deleteCatalog(catalogId);
+        return ResponseEntity.accepted().build();
+    }
+
+    @DeleteMapping("/catalog/all")
+    public ResponseEntity<Object> deleteAllCatalog() {
+        catalogService.deleteCatalogAll();
+        return ResponseEntity.accepted().build();
+    }
+
 
     @GetMapping("/catalog/{id}")
     public CatalogDto getCatalog(@PathVariable Long id) {

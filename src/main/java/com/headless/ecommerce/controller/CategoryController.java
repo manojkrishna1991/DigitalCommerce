@@ -1,14 +1,19 @@
 package com.headless.ecommerce.controller;
 
-import com.headless.ecommerce.domain.*;
+import com.headless.ecommerce.domain.Catalog;
+import com.headless.ecommerce.domain.Category;
+import com.headless.ecommerce.dto.CategoryAttributesDto;
 import com.headless.ecommerce.dto.CategoryDto;
+import com.headless.ecommerce.mapper.CategoryAttributesMapper;
 import com.headless.ecommerce.mapper.CategoryMapper;
 import com.headless.ecommerce.service.CatalogService;
+import com.headless.ecommerce.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.headless.ecommerce.service.CategoryService;
+import java.util.List;
 
 @RestController
 public class CategoryController {
@@ -18,16 +23,36 @@ public class CategoryController {
     private CatalogService catalogService;
     @Autowired
     private CategoryMapper categoryMapper;
+    @Autowired
+    private CategoryAttributesMapper categoryAttributesMapper;
 
-    @GetMapping("/category/{id}")
-    public ResponseEntity<Category> getCategory(@PathVariable Long id) {
-        return ResponseEntity.ok(categoryService.getCategory(id));
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<CategoryDto> getCategory(@PathVariable Long categoryId) {
+        Category category = categoryService.getCategory(categoryId);
+        return ResponseEntity.ok(categoryMapper.categoryToCategoryDto(category));
     }
 
     @PostMapping("/category")
     public CategoryDto saveCategory(@RequestBody CategoryDto categoryDto) {
         Category category = categoryService.saveCategory(createCategoryFromDto(categoryDto));
         return categoryMapper.categoryToCategoryDto(category);
+    }
+
+    @PostMapping("/category")
+    public List<CategoryAttributesDto> saveCategoryAttributes(@RequestBody List<CategoryAttributesDto> categoryAttributesDto, Long categoryId) {
+        return categoryService.saveCategoryAttributes(categoryAttributesDto, categoryId);
+    }
+
+    @DeleteMapping("/category/{categoryId}")
+    public ResponseEntity<Object> deleteCategory(@PathVariable Long categoryId) {
+        categoryService.deleteCategory(categoryId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping("/category/all")
+    public ResponseEntity<Object> deleteCategory() {
+        categoryService.deleteAllCategory();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     private Category createCategoryFromDto(CategoryDto categoryDto) {

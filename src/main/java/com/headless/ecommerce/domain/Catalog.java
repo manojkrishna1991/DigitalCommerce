@@ -8,13 +8,13 @@ import java.util.List;
 @Entity(name = "catalog")
 public class Catalog {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "catalog_id")
     private Long id;
     private String name;
-    @OneToMany(mappedBy="catalog")
+    @OneToMany(mappedBy = "catalog")
     private List<Category> categories;
-    @OneToMany(mappedBy="catalog")
+    @OneToMany(mappedBy = "catalog")
     private Collection<CatalogAttributes> catalogAttributes;
 
     public Long getId() {

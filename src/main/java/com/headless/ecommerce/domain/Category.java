@@ -7,12 +7,12 @@ import java.util.List;
 @Entity(name = "category")
 public class Category {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cateory_id")
     private Long id;
     private String name;
     @ManyToOne
-    @JoinColumn(name="catalog_id")
+    @JoinColumn(name = "catalog_id")
     private Catalog catalog;
     @OneToMany(mappedBy = "category")
     private List<Product> products;

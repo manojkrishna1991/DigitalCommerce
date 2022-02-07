@@ -28,6 +28,14 @@ public class CatalogService {
         return catalogRepository.save(catalog);
     }
 
+    public void deleteCatalog(Long catalogId) {
+        catalogRepository.deleteById(catalogId);
+    }
+
+    public void deleteCatalogAll() {
+        catalogRepository.deleteAll();
+    }
+
     public Catalog findCatalog(@NonNull Long id) {
         final Optional<Catalog> catalog = catalogRepository.findById(id);
         if (!catalog.isPresent()) {
