@@ -63,15 +63,6 @@ public class CategoryController {
         category.setCatalog(catalog);
         return category;
     }
-    //TODO: add the catalog attribute method
-/*    private void saveCategoryAttributes(CategoryDto categoryDto, Category savedCategory) {
-            CategoryAttributes categoryAttributes = new CategoryAttributes();
-            categoryAttributes.setId(attributes.getId());
-            categoryAttributes.setKey(attributes.getKey());
-            categoryAttributes.setValue(attributes.getValue());
-            categoryAttributes.setCategory(savedCategory);
-            categoryService.saveCategoryAttributes(categoryAttributes);
-    }*/
 
     @PutMapping("/category")
     public Category updateCategory(@RequestBody CategoryDto categoryDto) {
