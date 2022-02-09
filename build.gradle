@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.headless'
-version = '0.0.2-SNAPSHOT'
+version = '0.0.3-SNAPSHOT'
 sourceCompatibility = '8'
 
 repositories {
@@ -34,7 +34,7 @@ publishing {
         gpr(MavenPublication) {
             groupId = 'com.headless'
             artifactId = 'headless-ecommerce'
-            version = '0.2'
+            version = '0.3'
             from(components.java)
             versionMapping {
                 usage('java-api') {
