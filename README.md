@@ -24,7 +24,7 @@ For Maven
 
 For Gradle
 ```gradle 
-  implementation "com.headless:headless-ecommerce:0.2"
+  implementation "com.headless:headless-ecommerce:0.3"
   
   ```
   [![Build Passed](https://github.com/headlessecommerce/headlessecommerce.github.io/actions/workflows/gradle_build.yml/badge.svg?branch=main)](https://github.com/headlessecommerce/headlessecommerce.github.io/actions/workflows/gradle_build.yml)
