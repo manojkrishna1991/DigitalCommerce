@@ -17,7 +17,7 @@ For Maven
 <dependency>
   <groupId>com.headless</groupId>
   <artifactId>headless-ecommerce</artifactId>
-  <version>0.2</version>
+  <version>0.3</version>
 </dependency>
 
 ```
