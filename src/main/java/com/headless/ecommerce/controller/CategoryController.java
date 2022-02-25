@@ -38,7 +38,7 @@ public class CategoryController {
         return categoryMapper.categoryToCategoryDto(category);
     }
 
-    @PostMapping("/category")
+    @PostMapping("/category/{categoryId}/categoryAttributes")
     public List<CategoryAttributesDto> saveCategoryAttributes(@RequestBody List<CategoryAttributesDto> categoryAttributesDto, Long categoryId) {
         return categoryService.saveCategoryAttributes(categoryAttributesDto, categoryId);
     }
