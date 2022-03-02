@@ -1,7 +1,8 @@
 package com.headless.ecommerce.domain.profile;
 
+import java.util.List;
+
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity(name = "user")
 public class HeadlessUser {
@@ -19,11 +20,11 @@ public class HeadlessUser {
 
     @OneToMany
     @JoinColumn(referencedColumnName = "userId")
-    private Collection<Address> address;
+    private List<Address> address;
 
     @OneToMany
     @JoinColumn(referencedColumnName = "userId")
-    private Collection<UserRole> userRole;
+    private List<UserRole> userRole;
 
     public Long getUserId() {
         return userId;
@@ -49,19 +50,19 @@ public class HeadlessUser {
         this.password = password;
     }
 
-    public Collection<Address> getAddress() {
+    public List<Address> getAddress() {
         return address;
     }
 
-    public void setAddress(Collection<Address> address) {
+    public void setAddress(List<Address> address) {
         this.address = address;
     }
 
-    public Collection<UserRole> getUserRole() {
+    public List<UserRole> getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(Collection<UserRole> userRole) {
+    public void setUserRole(List<UserRole> userRole) {
         this.userRole = userRole;
     }
 }
