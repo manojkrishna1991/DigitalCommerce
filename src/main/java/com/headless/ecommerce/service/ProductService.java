@@ -1,5 +1,6 @@
 package com.headless.ecommerce.service;
 
+import com.headless.ecommerce.domain.Category;
 import com.headless.ecommerce.domain.Product;
 import com.headless.ecommerce.dto.ProductDto;
 import com.headless.ecommerce.exception.ProductNotFoundException;
@@ -20,10 +21,21 @@ public class ProductService {
     private ProductRepository productRepository;
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private CategoryService categoryService;
 
     public ProductDto saveProduct(ProductDto productDto) {
-        Product product = productMapper.productDtoToProduct(productDto);
+        Product product = createProduct(productDto);
         return productMapper.productToProductDto(productRepository.save(product));
+    }
+
+    private Product createProduct(ProductDto productDto) {
+        Category category = categoryService.getCategory(productDto.getCategoryId());
+        Product product = new Product();
+        product.setName(productDto.getName());
+        product.setId(productDto.getId());
+        product.setCategory(category);
+        return product;
     }
 
     public ProductDto updateProduct(ProductDto productDto) {

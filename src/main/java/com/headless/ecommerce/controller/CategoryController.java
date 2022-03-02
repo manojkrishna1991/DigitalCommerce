@@ -38,15 +38,10 @@ public class CategoryController {
         return categoryMapper.categoryToCategoryDto(category);
     }
 
-    @PostMapping("/category")
-    public List<CategoryAttributesDto> saveCategoryAttributes(@RequestBody List<CategoryAttributesDto> categoryAttributesDto, Long categoryId) {
+    @PostMapping("/category{categoryId}/categoryAttributes")
+    public List<CategoryAttributesDto> saveCategoryAttributes(@RequestBody List<CategoryAttributesDto> categoryAttributesDto, @PathVariable Long categoryId) {
         return categoryService.saveCategoryAttributes(categoryAttributesDto, categoryId);
     }
-    @GetMapping("/category/{categoryId}/categoryAttributes")
-    public List<CategoryAttributesDto> getCategoryAttributesDto(@PathVariable Long categoryId) {
-        return categoryService.getCatalogAttributes(categoryId);
-    }
-
 
     @DeleteMapping("/category/{categoryId}")
     public ResponseEntity<Object> deleteCategory(@PathVariable Long categoryId) {
@@ -68,6 +63,15 @@ public class CategoryController {
         category.setCatalog(catalog);
         return category;
     }
+    //TODO: add the catalog attribute method
+/*    private void saveCategoryAttributes(CategoryDto categoryDto, Category savedCategory) {
+            CategoryAttributes categoryAttributes = new CategoryAttributes();
+            categoryAttributes.setId(attributes.getId());
+            categoryAttributes.setKey(attributes.getKey());
+            categoryAttributes.setValue(attributes.getValue());
+            categoryAttributes.setCategory(savedCategory);
+            categoryService.saveCategoryAttributes(categoryAttributes);
+    }*/
 
     @PutMapping("/category")
     public Category updateCategory(@RequestBody CategoryDto categoryDto) {
