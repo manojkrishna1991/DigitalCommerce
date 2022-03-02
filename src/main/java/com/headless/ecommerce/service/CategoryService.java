@@ -8,6 +8,7 @@ import com.headless.ecommerce.mapper.CategoryAttributesMapper;
 import com.headless.ecommerce.repository.CategoryAttributesRepository;
 import com.headless.ecommerce.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,6 +50,12 @@ public class CategoryService {
         return categoryAttributesRepository.findByCategory(category).stream().map(categoryAttributes -> categoryAttributesMapper.categoryAttributesToCategoryAttributesDto(categoryAttributes)).collect(Collectors.toList());
 
     }
+
+    public List<CategoryAttributesDto> getCatalogAttributes(@NonNull Long categoryId) {
+        Category category = findCategoryById(categoryId);
+        return categoryAttributesRepository.findByCategory(category).stream().map(categoryAttributes -> categoryAttributesMapper.categoryAttributesToCategoryAttributesDto(categoryAttributes)).collect(Collectors.toList());
+    }
+
 
     public Category saveCategory(Category category) {
         return categoryRepository.save(category);
