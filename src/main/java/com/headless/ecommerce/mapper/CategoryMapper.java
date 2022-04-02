@@ -15,6 +15,7 @@ public interface CategoryMapper {
 
     @Mappings({
             @Mapping(target = "catalogId", source = "category.id"),
+            @Mapping(target = "childCategories", source = "category.subCategories")
     })
     CategoryDto categoryToCategoryDto(Category category);
 

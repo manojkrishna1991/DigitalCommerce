@@ -8,10 +8,9 @@ import java.util.List;
 
 @Getter
 @Setter
-public class CategoryDto {
+public class CategoryRequestDto {
 
     private Long id;
     private String name;
     private Long catalogId;
-    private List<CategoryDto> childCategories;
 }

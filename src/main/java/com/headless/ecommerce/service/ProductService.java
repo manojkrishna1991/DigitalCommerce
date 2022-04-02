@@ -11,6 +11,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -26,6 +27,8 @@ public class ProductService {
 
     public ProductDto saveProduct(ProductDto productDto) {
         Product product = createProduct(productDto);
+        Category category = categoryService.getCategory(productDto.getCategoryId());
+        product.setCategory(category);
         return productMapper.productToProductDto(productRepository.save(product));
     }
 
@@ -39,29 +42,30 @@ public class ProductService {
     }
 
     public ProductDto updateProduct(ProductDto productDto) {
-        Product product = productRepository.findById(productDto.getId()).get();
-        if (product == null) {
-            throw new ProductNotFoundException();
-        }
+        Product product = findProductById(productDto.getId());
         productMapper.updateProductFromDto(productDto, product);
         return productMapper.productToProductDto(productRepository.save(product));
     }
 
-    public ProductDto getProductById(@NonNull Long id) {
-        return productMapper.productToProductDto(productRepository.findById(id).get());
+    private Product findProductById(@NonNull Long productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        if (!product.isPresent()) {
+            throw new ProductNotFoundException();
+        }
+        return product.get();
+    }
+
+    public ProductDto getProductById(@NonNull Long productId) {
+        return productMapper.productToProductDto(findProductById(productId));
     }
 
     public List<ProductDto> getAllProduct() {
         return StreamSupport.stream(productRepository.findAll().spliterator(), false).map(product -> productMapper.productToProductDto(product)).collect(Collectors.toList());
     }
 
-    public Product deleteProduct(@NonNull Long id) {
-        Product product = productRepository.findById(id).get();
-        if (product != null) {
-            productRepository.delete(product);
-        } else {
-            throw new ProductNotFoundException();
-        }
+    public Product deleteProduct(@NonNull Long productId) {
+        Product product = findProductById(productId);
+        productRepository.delete(product);
         return product;
     }
 

@@ -16,8 +16,20 @@ public class Category {
     private Catalog catalog;
     @OneToMany(mappedBy = "category")
     private List<Product> products;
-    @OneToMany
-    private List<Category> childCategories;
+    @ManyToMany
+    @JoinTable(name="category_relationship",
+            joinColumns=@JoinColumn(name="category_id"),
+            inverseJoinColumns=@JoinColumn(name="subcategory_id")
+    )
+    private List<Category> categories;
+
+    @ManyToMany
+    @JoinTable(name="category_relationship",
+            joinColumns=@JoinColumn(name="subcategory_id"),
+            inverseJoinColumns=@JoinColumn(name="category_id")
+    )
+    private List<Category> subCategories;
+
     @OneToMany(mappedBy = "category")
     private List<CategoryAttributes> categoryAttributes;
 
@@ -41,10 +53,6 @@ public class Category {
         return products;
     }
 
-    public Collection<Category> getChildCategories() {
-        return childCategories;
-    }
-
     public Catalog getCatalog() {
         return catalog;
     }
@@ -65,7 +73,12 @@ public class Category {
         this.products = products;
     }
 
-    public void setChildCategories(List<Category> childCategories) {
-        this.childCategories = childCategories;
+
+    public List<Category> getSubCategories() {
+        return subCategories;
+    }
+
+    public void setSubCategories(List<Category> subCategories) {
+        this.subCategories = subCategories;
     }
 }

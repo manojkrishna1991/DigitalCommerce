@@ -12,8 +12,19 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id")
     private Long id;
-    @OneToMany
-    private Collection<Product> relatedProducts;
+    @ManyToMany
+    @JoinTable(name="product_relationship",
+            joinColumns=@JoinColumn(name="product_id"),
+            inverseJoinColumns=@JoinColumn(name="related_product_id")
+    )
+    private List<Product> products;
+
+    @ManyToMany
+    @JoinTable(name="product_relationship",
+            joinColumns=@JoinColumn(name="related_product_id"),
+            inverseJoinColumns=@JoinColumn(name="product_id")
+    )
+    private List<Product> relatedProducts;
     @OneToMany(mappedBy = "product")
     private Collection<Sku> skus;
     @ManyToOne
@@ -39,11 +50,11 @@ public class Product {
     }
 
 
-    public Collection<Product> getRelatedProducts() {
+    public List<Product> getRelatedProducts() {
         return relatedProducts;
     }
 
-    public void setRelatedProducts(Collection<Product> relatedProducts) {
+    public void setRelatedProducts(List<Product> relatedProducts) {
         this.relatedProducts = relatedProducts;
     }
 

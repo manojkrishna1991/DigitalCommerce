@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class CategoryService {
@@ -42,7 +43,7 @@ public class CategoryService {
             CategoryAttributes categoryAttributes = new CategoryAttributes();
             categoryAttributes.setId(categoryAttributesDto.getId());
             categoryAttributes.setKey(categoryAttributesDto.getKey());
-            categoryAttributes.setKey(categoryAttributesDto.getValue());
+            categoryAttributes.setValue(categoryAttributesDto.getValue());
             categoryAttributes.setCategory(category);
             categoryAttributesRepository.save(categoryAttributes);
         });
@@ -51,7 +52,7 @@ public class CategoryService {
 
     }
 
-    public List<CategoryAttributesDto> getCatalogAttributes(@NonNull Long categoryId) {
+    public List<CategoryAttributesDto> getCategoryAttributes(@NonNull Long categoryId) {
         Category category = findCategoryById(categoryId);
         return categoryAttributesRepository.findByCategory(category).stream().map(categoryAttributes -> categoryAttributesMapper.categoryAttributesToCategoryAttributesDto(categoryAttributes)).collect(Collectors.toList());
     }
@@ -67,5 +68,9 @@ public class CategoryService {
 
     public void deleteAllCategory() {
         categoryRepository.deleteAll();
+    }
+
+    public List<Category> getAllCategory() {
+        return StreamSupport.stream(categoryRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 }

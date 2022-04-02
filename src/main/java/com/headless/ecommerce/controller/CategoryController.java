@@ -4,6 +4,7 @@ import com.headless.ecommerce.domain.Catalog;
 import com.headless.ecommerce.domain.Category;
 import com.headless.ecommerce.dto.CategoryAttributesDto;
 import com.headless.ecommerce.dto.CategoryDto;
+import com.headless.ecommerce.dto.CategoryRequestDto;
 import com.headless.ecommerce.mapper.CategoryAttributesMapper;
 import com.headless.ecommerce.mapper.CategoryMapper;
 import com.headless.ecommerce.service.CatalogService;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class CategoryController {
@@ -33,14 +35,19 @@ public class CategoryController {
     }
 
     @PostMapping("/category")
-    public CategoryDto saveCategory(@RequestBody CategoryDto categoryDto) {
-        Category category = categoryService.saveCategory(createCategoryFromDto(categoryDto));
+    public CategoryDto saveCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
+        Category category = categoryService.saveCategory(createCategoryFromDto(categoryRequestDto));
         return categoryMapper.categoryToCategoryDto(category);
     }
 
-    @PostMapping("/category{categoryId}/categoryAttributes")
+    @PostMapping("/category/{categoryId}/categoryAttributes")
     public List<CategoryAttributesDto> saveCategoryAttributes(@RequestBody List<CategoryAttributesDto> categoryAttributesDto, @PathVariable Long categoryId) {
         return categoryService.saveCategoryAttributes(categoryAttributesDto, categoryId);
+    }
+
+    @GetMapping("/category/{categoryId}/categoryAttributes")
+    public List<CategoryAttributesDto> getCategoryAttributes(@PathVariable Long categoryId) {
+        return categoryService.getCategoryAttributes(categoryId);
     }
 
     @DeleteMapping("/category/{categoryId}")
@@ -55,23 +62,21 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    private Category createCategoryFromDto(CategoryDto categoryDto) {
+    @GetMapping("/category/all")
+    public ResponseEntity<Object> getAllCategory() {
+        List<Category> categories = categoryService.getAllCategory();
+        List<CategoryDto> categoryDtos = categories.stream().map(category -> categoryMapper.categoryToCategoryDto(category)).collect(Collectors.toList());
+        return ResponseEntity.ok(categoryDtos);
+    }
+
+    private Category createCategoryFromDto(CategoryRequestDto categoryRequestDto) {
         Category category = new Category();
-        category.setId(categoryDto.getId());
-        category.setName(categoryDto.getName());
-        Catalog catalog = catalogService.findCatalog(categoryDto.getCatalogId());
+        category.setId(categoryRequestDto.getId());
+        category.setName(categoryRequestDto.getName());
+        Catalog catalog = catalogService.findCatalog(categoryRequestDto.getCatalogId());
         category.setCatalog(catalog);
         return category;
     }
-    //TODO: add the catalog attribute method
-/*    private void saveCategoryAttributes(CategoryDto categoryDto, Category savedCategory) {
-            CategoryAttributes categoryAttributes = new CategoryAttributes();
-            categoryAttributes.setId(attributes.getId());
-            categoryAttributes.setKey(attributes.getKey());
-            categoryAttributes.setValue(attributes.getValue());
-            categoryAttributes.setCategory(savedCategory);
-            categoryService.saveCategoryAttributes(categoryAttributes);
-    }*/
 
     @PutMapping("/category")
     public Category updateCategory(@RequestBody CategoryDto categoryDto) {
