@@ -7,7 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+import java.util.Optional;
+
+@RestController()
+@RequestMapping("/order")
 public class OrderController {
 
 
@@ -15,16 +18,26 @@ public class OrderController {
     OrderService orderService;
 
     
-    @PostMapping("/createOrder")
+    @PostMapping
     public ResponseEntity<CommerceOrder> createOrder(@RequestBody CommerceOrder commerceOrder) {
         return ResponseEntity.ok(orderService.createOrder(commerceOrder));
     }
 
-//    @PostMapping("/getorder")
-//    public ResponseEntity<Order> getOrderByOrderId(@RequestBody Order order) {
-//        return ResponseEntity.ok();
-//    }
+    @GetMapping("/{orderID}")
+    public ResponseEntity<CommerceOrder> getOrderByOrderId(@PathVariable  Long orderID) {
+        return ResponseEntity.ok(orderService.getOrderID(orderID).get());
+    }
 
+
+    @DeleteMapping("/{orderID}")
+    public void deleteOrder(@PathVariable  Long orderID) {
+        orderService.deleteOrderID(orderID);
+    }
+
+    @PutMapping("/{orderID}")
+    public void updateOrder(@PathVariable  Long orderID,@RequestBody CommerceOrder commerceOrder) {
+        orderService.updateOrder(orderID,commerceOrder);
+    }
    
 
 }

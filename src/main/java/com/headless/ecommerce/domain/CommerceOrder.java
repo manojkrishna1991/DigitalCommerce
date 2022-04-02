@@ -1,5 +1,8 @@
 package com.headless.ecommerce.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -8,7 +11,14 @@ import java.util.List;
 public class CommerceOrder {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+            name = "sequence-generator",
+            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {@org.hibernate.annotations.Parameter(name = "sequence_name", value = "order_sequence"),
+                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "1000"),
+                    @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")}
+    )
     @Column(name = "order_id")
     private Long id;
 
@@ -24,7 +34,7 @@ public class CommerceOrder {
     @Column
     private String anonymousId;
 
-    @OneToMany(mappedBy = "commerceOrder")
+    @OneToMany(mappedBy = "commerceOrder",cascade = CascadeType.ALL)
     private List<LineItem> lineItem;;
 
     @Column
@@ -39,12 +49,14 @@ public class CommerceOrder {
     private LocalDate createdTime;
     @Column
     private Long updatedBy;
-    @Column
-    private Integer version;
+    @Version
+    @Column(name = "VERSION")
+    private long version;
+
     @Column
     private LocalDate lastModifiedAt;
     @Column
-    private  LocalDate lastModifiedBy;
+    private  Integer lastModifiedBy;
 
     public LocalDate getUpdatedTime() {
         return updatedTime;
@@ -70,12 +82,21 @@ public class CommerceOrder {
         this.updatedBy = updatedBy;
     }
 
-    public Integer getVersion() {
+
+    public long getVersion() {
         return version;
     }
 
-    public void setVersion(Integer version) {
+    public void setVersion(long version) {
         this.version = version;
+    }
+
+    public Integer getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(Integer lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
     public LocalDate getLastModifiedAt() {

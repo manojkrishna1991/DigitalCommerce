@@ -1,16 +1,29 @@
 package com.headless.ecommerce.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.annotations.GenericGenerator;
+import springfox.documentation.annotations.ApiIgnore;
+
 import javax.persistence.*;
 
 @Entity(name = "LineItem")
 public class LineItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+            name = "sequence-generator",
+            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {@org.hibernate.annotations.Parameter(name = "sequence_name", value = "line_sequence"),
+                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "1000"),
+                    @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")}
+    )    @ApiModelProperty(hidden = true)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="order_id")
+    @JsonIgnore
     private CommerceOrder commerceOrder;
 
     @Column
@@ -30,13 +43,6 @@ public class LineItem {
         this.id = id;
     }
 
-    public CommerceOrder getOrder() {
-        return commerceOrder;
-    }
-
-    public void setOrder(CommerceOrder commerceOrder) {
-        this.commerceOrder = commerceOrder;
-    }
 
     public Integer getQuantity() {
         return quantity;
