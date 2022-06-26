@@ -47,7 +47,7 @@ public class ProductService {
         return productMapper.productToProductDto(productRepository.save(product));
     }
 
-    private Product findProductById(@NonNull Long productId) {
+    public Product findProductById(@NonNull Long productId) {
         Optional<Product> product = productRepository.findById(productId);
         if (!product.isPresent()) {
             throw new ProductNotFoundException();

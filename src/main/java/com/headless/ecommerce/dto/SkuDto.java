@@ -12,5 +12,5 @@ public class SkuDto {
     private Long quantity;
     private Double listPrice;
     private Double salePrice;
-    private ProductDto product;
+    private Long productId;
 }
