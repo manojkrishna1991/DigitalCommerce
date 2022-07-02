@@ -8,7 +8,6 @@ import java.util.List;
 @Entity(name = "catalog")
 public class Catalog {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "catalog_id")
     private Long id;
     private String name;

@@ -7,7 +7,6 @@ import java.util.List;
 @Entity(name = "category")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cateory_id")
     private Long id;
     private String name;

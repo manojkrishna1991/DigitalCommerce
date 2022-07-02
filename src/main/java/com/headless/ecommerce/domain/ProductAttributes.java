@@ -4,7 +4,6 @@ import javax.persistence.*;
 @Entity
 public class ProductAttributes {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String key;
     private String value;

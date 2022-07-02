@@ -9,7 +9,6 @@ import java.util.List;
 public class Product {
     private String name;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id")
     private Long id;
     @ManyToMany

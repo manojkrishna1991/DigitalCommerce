@@ -8,7 +8,6 @@ import java.util.List;
 @Entity(name = "sku")
 public class Sku {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty
     @Column(name = "sku_id")
     private Long id;
