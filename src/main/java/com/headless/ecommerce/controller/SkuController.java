@@ -1,13 +1,10 @@
 package com.headless.ecommerce.controller;
 
-import com.headless.ecommerce.service.SkuService;
+import com.headless.ecommerce.dto.SkuAttributeDto;
 import com.headless.ecommerce.dto.SkuDto;
+import com.headless.ecommerce.service.SkuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +26,10 @@ public class SkuController {
     @GetMapping("/sku/all")
     public List<SkuDto> getSkus() {
         return skuService.getSkus();
+    }
+
+    @PostMapping("/sku/{skuId}/skuAttributes")
+    public List<SkuAttributeDto> saveSkuAttributes(@RequestBody List<SkuAttributeDto> skuAttributeDtos, @PathVariable Long skuId) {
+        return skuService.saveProductAttibutes(skuAttributeDtos, skuId);
     }
 }
