@@ -60,7 +60,7 @@ public class EcommerceApplication {
                 "Ecommerce API",
                 "1",
                 "Terms of service",
-                new Contact("Manoj Krishna", "dmanojkrishna@gmail.com", "dmanojkrishna@gmail.com"),
+                new Contact("Aachit Store", "aachitstore@gmail.com", "aachitstore@gmail.com"),
                 "License of API", "API license URL", Collections.emptyList());
     }
 

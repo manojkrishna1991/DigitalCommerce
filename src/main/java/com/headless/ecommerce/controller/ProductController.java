@@ -1,6 +1,7 @@
 package com.headless.ecommerce.controller;
 
 import com.headless.ecommerce.domain.Product;
+import com.headless.ecommerce.dto.CategoryAttributesDto;
 import com.headless.ecommerce.dto.ProductAttributeDto;
 import com.headless.ecommerce.dto.ProductDto;
 import com.headless.ecommerce.service.ProductService;
@@ -47,4 +48,10 @@ public class ProductController {
 
         return ResponseEntity.ok(productService.updateProduct(productDto));
     }
+
+    @GetMapping("/product/{productId}/productAttributes")
+    public List<ProductAttributeDto> getProductAttributes(@PathVariable Long productId) {
+        return productService.getProductAttributes(productId);
+    }
+
 }

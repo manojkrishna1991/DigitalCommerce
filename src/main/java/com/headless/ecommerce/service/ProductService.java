@@ -94,4 +94,9 @@ public class ProductService {
 
     }
 
+    public List<ProductAttributeDto> getProductAttributes(Long productId) {
+        Product product = findProductById(productId);
+        return productAttributeRepository.findByProduct(product).stream().map(productAttributeMapper::productAttributesToProductAttributeDto).collect(Collectors.toList());
+    }
+
 }

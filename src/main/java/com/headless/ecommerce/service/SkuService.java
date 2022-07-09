@@ -11,6 +11,7 @@ import com.headless.ecommerce.mapper.SkuMapper;
 import com.headless.ecommerce.repository.SkuAttributeRepository;
 import com.headless.ecommerce.repository.SkuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class SkuService {
 
     }
 
-    public List<SkuAttributeDto> saveProductAttibutes(List<SkuAttributeDto> skuAttributeDtoList, Long skuId) {
+    public List<SkuAttributeDto> saveSkuAttibutes(List<SkuAttributeDto> skuAttributeDtoList, Long skuId) {
         Sku sku = findSkuById(skuId);
         skuAttributeDtoList.forEach(skuAttributeDto -> {
             SkuAttributes skuAttributes = new SkuAttributes();
@@ -71,4 +72,10 @@ public class SkuService {
         return skuAttributeRepository.findBySku(sku).stream().map(skuAttributeMapper::skuAttributeToSkuAttributeDto).collect(Collectors.toList());
 
     }
+
+    public List<SkuAttributeDto> getSkuAttributes(@NonNull Long skuId) {
+        Sku sku = findSkuById(skuId);
+        return skuAttributeRepository.findBySku(sku).stream().map(skuAttributeMapper::skuAttributeToSkuAttributeDto).collect(Collectors.toList());
+    }
+
 }

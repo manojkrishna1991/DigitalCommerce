@@ -30,6 +30,12 @@ public class SkuController {
 
     @PostMapping("/sku/{skuId}/skuAttributes")
     public List<SkuAttributeDto> saveSkuAttributes(@RequestBody List<SkuAttributeDto> skuAttributeDtos, @PathVariable Long skuId) {
-        return skuService.saveProductAttibutes(skuAttributeDtos, skuId);
+        return skuService.saveSkuAttibutes(skuAttributeDtos, skuId);
     }
+
+    @GetMapping("/sku/{skuId}/skuAttributes")
+    public List<SkuAttributeDto> getSkuAttributes(@PathVariable Long skuId) {
+        return skuService.getSkuAttributes(skuId);
+    }
+
 }
