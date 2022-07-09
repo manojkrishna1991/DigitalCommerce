@@ -1,6 +1,7 @@
 package com.headless.ecommerce.controller;
 
 import com.headless.ecommerce.domain.Product;
+import com.headless.ecommerce.dto.ProductAttributeDto;
 import com.headless.ecommerce.dto.ProductDto;
 import com.headless.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 public class ProductController {
@@ -33,6 +35,11 @@ public class ProductController {
     @DeleteMapping("/product/{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
         return ResponseEntity.ok(productService.deleteProduct(id));
+    }
+
+    @PostMapping("/product/{productId}/productAttributes")
+    public List<ProductAttributeDto> saveProductAttributes(@RequestBody List<ProductAttributeDto> productAttributeDtos, @PathVariable Long productId) {
+        return productService.saveProductAttibutes(productAttributeDtos, productId);
     }
 
     @PutMapping("/product")
