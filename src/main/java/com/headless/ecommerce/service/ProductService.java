@@ -6,10 +6,12 @@ import com.headless.ecommerce.domain.ProductAttributes;
 import com.headless.ecommerce.dto.ProductAttributeDto;
 import com.headless.ecommerce.dto.ProductDto;
 import com.headless.ecommerce.exception.ProductNotFoundException;
+import com.headless.ecommerce.exception.productcatalog.CategoryNotFoundException;
 import com.headless.ecommerce.mapper.ProductAttributeMapper;
 import com.headless.ecommerce.mapper.ProductMapper;
 import com.headless.ecommerce.repository.ProductAttributeRepository;
 import com.headless.ecommerce.repository.ProductRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
+@Slf4j
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -38,17 +41,27 @@ public class ProductService {
 
     public ProductDto saveProduct(ProductDto productDto) {
         Product product = createProduct(productDto);
-        Category category = categoryService.getCategory(productDto.getCategoryId());
-        product.setCategory(category);
+        Optional<Category> category = getCategory(productDto);
+        category.ifPresent(product::setCategory);
         return productMapper.productToProductDto(productRepository.save(product));
     }
 
+    private Optional<Category> getCategory(ProductDto productDto) {
+        try {
+            Category category = categoryService.getCategory(productDto.getCategoryId());
+            return Optional.of(category);
+        } catch (CategoryNotFoundException categoryNotFoundException) {
+            log.warn("Invalid  category provided for product creation");
+        }
+        return Optional.empty();
+    }
+
     private Product createProduct(ProductDto productDto) {
-        Category category = categoryService.getCategory(productDto.getCategoryId());
+        Optional<Category> category = getCategory(productDto);
         Product product = new Product();
         product.setName(productDto.getName());
         product.setId(productDto.getId());
-        product.setCategory(category);
+        category.ifPresent(product::setCategory);
         return product;
     }
 

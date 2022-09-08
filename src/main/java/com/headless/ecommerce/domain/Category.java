@@ -13,7 +13,7 @@ public class Category {
     @ManyToOne
     @JoinColumn(name = "catalog_id")
     private Catalog catalog;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL})
     private List<Product> products;
     @ManyToMany
     @JoinTable(name="category_relationship",
