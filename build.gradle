@@ -3,6 +3,8 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'maven-publish'
+    id 'com.diffplug.eclipse.apt' version '3.37.2'
+    
 }
 
 group = 'com.headless'

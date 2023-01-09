@@ -1,6 +1,7 @@
 package com.headless.ecommerce.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.headless.ecommerce.domain.inventory.Inventory;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,6 +21,8 @@ public class Sku {
     private Product product;
     @OneToMany(mappedBy = "sku")
     private List<SkuAttributes> skuAttributes;
+    @OneToOne(mappedBy = "sku")
+    private Inventory inventory;
 
     public Long getId() {
         return id;

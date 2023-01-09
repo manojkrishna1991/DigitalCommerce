@@ -8,7 +8,7 @@ import java.util.List;
 @Entity(name = "category")
 public class Category {
     @Id
-    @Column(name = "cateory_id")
+    @Column(name = "category_id")
     private Long id;
     private String name;
     private String version;
@@ -18,6 +18,8 @@ public class Category {
     private String metaDescription;
     private String metaKeywords;
     private Date createdAt;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
     private Author author;
     @ManyToOne
     @JoinColumn(name = "catalog_id")
